@@ -1,0 +1,81 @@
+{
+  "trace_id": "ae7fe693-15c2-45d6-adfb-efef9dfbbe2a",
+  "session_id": "eval-8fc6dab0-a36c-471d-b09b-bfb8501bdc20",
+  "timestamp": "2026-07-14T03:36:42.913646",
+  "user_input": "Apply sick leave for EMP-303 from 2026-09-10 to 2026-09-15",
+  "total_latency_sec": 1.4324084989493713,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.3550176250282675,
+      "prompt_tokens": 117,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3549999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.0750838329549879,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-303",
+            "leave_type": "sick",
+            "start_date": "2026-09-10",
+            "end_date": "2026-09-15",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 1.074477833113633,
+          "retries": 1,
+          "failures": [
+            "HR API write conflict.",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback_queued"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.002307040966115892,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "Document Introduction",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3549999999999994e-05,
+  "status": "completed"
+}

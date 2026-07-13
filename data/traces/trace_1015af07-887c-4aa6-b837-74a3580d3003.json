@@ -1,0 +1,47 @@
+{
+  "trace_id": "1015af07-887c-4aa6-b837-74a3580d3003",
+  "session_id": "eval-fa2f1a9a-852d-4145-8c5a-b3fe964af50c",
+  "timestamp": "2026-07-14T03:36:48.018384",
+  "user_input": "What is the sick leave policy and check my sick leave balance for EMP-101",
+  "total_latency_sec": 0.7108275420032442,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 1.3042008504271507e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.7108144999947399,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-101",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.7102751669008285,
+          "retries": 0,
+          "failures": [],
+          "status": "success"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

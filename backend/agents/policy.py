@@ -6,6 +6,9 @@ from typing import Any, Protocol
 from langchain_core.messages import AIMessage
 
 from backend.rag.models import RetrievalHit
+from backend.tracing.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 class PolicyRetriever(Protocol):
@@ -26,7 +29,11 @@ class PolicyAgent:
         """Return a retrieval-grounded policy answer or an unavailable notice."""
         user_input = state.get("user_input", "") if isinstance(state, dict) else str(state)
 
-        hits = self.retriever.retrieve(user_input, top_k=4)
+        try:
+            hits = self.retriever.retrieve(user_input, top_k=4)
+        except Exception as e:
+            logger.error("policy_agent_retrieval_failed", error=str(e))
+            hits = []
 
         if not hits:
             content = (
@@ -62,8 +69,13 @@ class PolicyAgent:
         }
 
     def _compose_answer(self, hits: list[RetrievalHit]) -> str:
-        """Compose an answer exclusively from retrieved policy chunks."""
+        """Compose an answer exclusively from retrieved policy chunks with metadata attribution."""
         lines = ["Based on the retrieved HR policy context:"]
         for hit in hits[:3]:
-            lines.append(f"- {hit.title}: {hit.content}")
+            dist_str = f"{hit.distance:.3f}" if hit.distance is not None else "N/A"
+            lines.append(f"\n### Section: {hit.title}")
+            lines.append(
+                f"*Source: {hit.source} (Relevance Rank: {hit.rank}, Distance: {dist_str})*"
+            )
+            lines.append(hit.content)
         return "\n".join(lines)

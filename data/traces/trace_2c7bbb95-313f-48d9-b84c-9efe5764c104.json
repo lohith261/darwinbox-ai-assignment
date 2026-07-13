@@ -1,0 +1,62 @@
+{
+  "trace_id": "2c7bbb95-313f-48d9-b84c-9efe5764c104",
+  "session_id": "eval-95be6b59-9417-43b2-99d4-1ced970aab91",
+  "timestamp": "2026-07-14T03:36:39.946309",
+  "user_input": "xyz123abc !!!",
+  "total_latency_sec": 0.29805945802945644,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2956275830511004,
+      "prompt_tokens": 105,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.175e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 6.829097401350737e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.002363584004342556,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "Document Introduction",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.175e-05,
+  "status": "completed"
+}

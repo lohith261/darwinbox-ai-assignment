@@ -1,6 +1,5 @@
 """Workflow service backed by LangGraph with execution tracing and optimized routing."""
 
-import logging
 import uuid
 from dataclasses import dataclass, field
 from typing import Any
@@ -14,9 +13,10 @@ from backend.schemas.workflow import (
     WorkflowInvokeResponse,
     WorkflowSessionResponse,
 )
+from backend.tracing.logging import get_logger
 from backend.tracing.manager import AgentTrace, RequestTrace, ToolCallTrace, TraceManager
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 @dataclass(slots=True)
@@ -103,7 +103,7 @@ class WorkflowService:
         )
 
     def get_session(self, session_id: str) -> WorkflowSessionResponse:
-        """Return the current checkpointed session state."""
+        """Return the current persisted state for a workflow session."""
         config = {"configurable": {"thread_id": session_id}}
         snapshot = self.workflow_graph.compiled.get_state(config)
         values = snapshot.values if snapshot else {}
@@ -120,7 +120,7 @@ class WorkflowService:
         )
 
     def graph_visualization(self) -> GraphVisualizationResponse:
-        """Return the graph visualization."""
+        """Return the workflow graph visualization."""
         return GraphVisualizationResponse(
             mermaid=self.workflow_graph.mermaid_diagram(),
         )

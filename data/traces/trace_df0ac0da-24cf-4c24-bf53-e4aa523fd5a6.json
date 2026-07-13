@@ -1,0 +1,62 @@
+{
+  "trace_id": "df0ac0da-24cf-4c24-bf53-e4aa523fd5a6",
+  "session_id": "b215d986-5e9d-40ee-9ed2-1a896593cc13",
+  "timestamp": "2026-07-14T03:28:04.549398",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.4498987089609727,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.37824662507046014,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.00010212499182671309,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.07154995889868587,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "7. Paternity Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "10. Work From Home Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "11. Remote Work Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

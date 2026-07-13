@@ -1,0 +1,50 @@
+{
+  "trace_id": "1ea5b128-1e13-4b66-976a-52f6d7de7eac",
+  "session_id": "eval-c58de70b-da8f-4903-adaa-128f86b93fcb",
+  "timestamp": "2026-07-14T03:36:37.130631",
+  "user_input": "Apply leave for EMP-102",
+  "total_latency_sec": 1.6095796240260825,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 2.9582995921373367e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.609550041030161,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-102",
+            "leave_type": "earned",
+            "start_date": "2026-07-20",
+            "end_date": "2026-07-21",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 1.6092614999506623,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback_queued"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

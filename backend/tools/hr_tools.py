@@ -1,6 +1,5 @@
 """Mock HR tools with built-in resilience (retry, timeout, fallback) and metadata tracking."""
 
-import logging
 import random
 import time
 import uuid
@@ -9,7 +8,9 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-logger = logging.getLogger(__name__)
+from backend.tracing.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 # ----------------------------------------------------
@@ -53,12 +54,12 @@ class ApplyLeaveResponse(BaseModel):
 
 class FetchPayslipRequest(BaseModel):
     employee_id: str = Field(..., description="The unique ID of the employee.")
-    month: str = Field(..., description="Month name or number (e.g., January, 01).")
-    year: int = Field(..., description="Year (e.g., 2026).")
+    month: str = Field(..., description="Month of payslip.")
+    year: int = Field(..., description="Year of payslip.")
 
 
 class FetchPayslipResponse(BaseModel):
-    status: str = Field(..., description="Status of retrieval (e.g., success, fallback).")
+    status: str = Field(..., description="Status of the call (e.g., success, fallback).")
     employee_id: str
     month: str
     year: int
@@ -67,7 +68,7 @@ class FetchPayslipResponse(BaseModel):
 
 
 # ----------------------------------------------------
-# Core & Fallback Implementations
+# Core System APIs (Mocking database and latency)
 # ----------------------------------------------------
 
 
@@ -78,21 +79,15 @@ def _core_check_leave_balance(request: LeaveBalanceRequest) -> LeaveBalanceRespo
 
     # Simulate random failure
     if random.random() < 0.3:
-        raise RuntimeError("HR API database connection timeout.")
+        raise RuntimeError("HR Database timeout.")
 
-    balances = {
-        "sick": 12,
-        "casual": 8,
-        "earned": 18,
-    }
-    ltype = request.leave_type.lower()
-    balance = balances.get(ltype, 15)
-
+    balances = {"sick": 10, "casual": 8, "earned": 15}
+    bal = balances.get(request.leave_type.lower(), 12)
     return LeaveBalanceResponse(
         status="success",
         employee_id=request.employee_id,
         leave_type=request.leave_type,
-        balance=balance,
+        balance=bal,
         source="api",
     )
 
@@ -199,16 +194,28 @@ def execute_with_resilience(
                     "retries": attempt - 1,
                     "failures": failures,
                 }
+                logger.info(
+                    "tool_execution_attempt_success",
+                    tool=core_func.__name__,
+                    attempt=attempt,
+                    latency_sec=elapsed,
+                )
                 return result, metadata
             except TimeoutError:
                 failures.append(f"Timeout after {timeout_sec}s")
                 logger.warning(
-                    f"Attempt {attempt} timed out after {timeout_sec}s for {core_func.__name__}"
+                    "tool_execution_attempt_timeout",
+                    tool=core_func.__name__,
+                    attempt=attempt,
+                    timeout_sec=timeout_sec,
                 )
             except Exception as e:
                 failures.append(str(e))
                 logger.warning(
-                    f"Attempt {attempt} failed with exception for {core_func.__name__}: {e}"
+                    "tool_execution_attempt_failed",
+                    tool=core_func.__name__,
+                    attempt=attempt,
+                    error=str(e),
                 )
 
     result = fallback_func(request)
@@ -218,6 +225,14 @@ def execute_with_resilience(
         "retries": attempts - 1,
         "failures": failures,
     }
+    logger.info(
+        "tool_execution_fallback_activated",
+        tool=core_func.__name__,
+        fallback_tool=fallback_func.__name__,
+        latency_sec=elapsed,
+        retries=attempts - 1,
+        failures=failures,
+    )
     return result, metadata
 
 

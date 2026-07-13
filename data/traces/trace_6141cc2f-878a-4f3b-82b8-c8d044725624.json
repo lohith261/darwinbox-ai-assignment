@@ -1,0 +1,62 @@
+{
+  "trace_id": "6141cc2f-878a-4f3b-82b8-c8d044725624",
+  "session_id": "a0ebc0c0-b53f-4600-aba0-df50c544587f",
+  "timestamp": "2026-07-14T03:23:34.400302",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.37324325006920844,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.270193750038743,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 4.541699308902025e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.1030040830373764,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "Document Introduction",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "11. Remote Work Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

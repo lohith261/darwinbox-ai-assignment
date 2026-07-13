@@ -1,0 +1,78 @@
+{
+  "trace_id": "58131216-0a2e-4e28-a5db-2c716ef52b2c",
+  "session_id": "eval-177a5a4b-6aec-44f8-9fdc-67ee8f9a48a5",
+  "timestamp": "2026-07-14T03:37:33.375213",
+  "user_input": "Apply sick leave for EMP-101 from 2026-08-01 to 2026-08-05",
+  "total_latency_sec": 1.0295196662191302,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.8266171660507098,
+      "prompt_tokens": 117,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3549999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.1483491670805961,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-101",
+            "leave_type": "sick",
+            "start_date": "2026-08-01",
+            "end_date": "2026-08-05",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.14766262494958937,
+          "retries": 0,
+          "failures": [],
+          "status": "approved"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.054553333087824285,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "5. Earned Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3549999999999994e-05,
+  "status": "completed"
+}

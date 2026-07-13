@@ -1,0 +1,47 @@
+{
+  "trace_id": "1ca71c4f-7aa4-48fc-a387-3c7c85040862",
+  "session_id": "eval-e6e84c94-8598-4496-9f95-22d9314124d9",
+  "timestamp": "2026-07-14T03:37:35.604221",
+  "user_input": "Apply leave from 2026-08-05 to 2026-08-01",
+  "total_latency_sec": 0.8040359569713473,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 1.7666025087237358e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.8040182909462601,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-123",
+            "leave_type": "earned",
+            "start_date": "2026-08-05",
+            "end_date": "2026-08-01",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.8031595000065863,
+          "retries": 0,
+          "failures": [],
+          "status": "approved"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

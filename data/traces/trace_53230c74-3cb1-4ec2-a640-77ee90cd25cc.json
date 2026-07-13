@@ -1,0 +1,62 @@
+{
+  "trace_id": "53230c74-3cb1-4ec2-a640-77ee90cd25cc",
+  "session_id": "eval-971c883e-cd2a-4a25-9604-e65758aa14c9",
+  "timestamp": "2026-07-14T03:37:35.219766",
+  "user_input": "What is the notice period policy?",
+  "total_latency_sec": 0.31513454113155603,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.3134420000715181,
+      "prompt_tokens": 110,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.25e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.779101487249136e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.0016647500451654196,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "5. Earned Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.25e-05,
+  "status": "completed"
+}

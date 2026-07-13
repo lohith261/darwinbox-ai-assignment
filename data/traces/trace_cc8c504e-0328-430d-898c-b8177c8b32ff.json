@@ -1,0 +1,62 @@
+{
+  "trace_id": "cc8c504e-0328-430d-898c-b8177c8b32ff",
+  "session_id": "eval-77c19f6d-1df0-49d7-b72a-acb3b3872a53",
+  "timestamp": "2026-07-14T03:37:46.094953",
+  "user_input": "Please outline the notice period requirements and execute a request for my absences next week.",
+  "total_latency_sec": 0.28056558303069323,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2755693329963833,
+      "prompt_tokens": 126,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.49e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 6.004201713949442e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.004936208017170429,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "5. Earned Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.49e-05,
+  "status": "completed"
+}

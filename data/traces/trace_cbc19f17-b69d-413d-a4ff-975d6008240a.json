@@ -1,0 +1,50 @@
+{
+  "trace_id": "cbc19f17-b69d-413d-a4ff-975d6008240a",
+  "session_id": "eval-8245b83c-3a28-4047-980e-49970621f003",
+  "timestamp": "2026-07-14T03:36:45.916386",
+  "user_input": "What is my casual leave balance? My ID is EMP-FAIL",
+  "total_latency_sec": 2.097863874863833,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 2.1957908757030964e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.097841916955076,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-123",
+            "leave_type": "casual",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 2.0975695840315893,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

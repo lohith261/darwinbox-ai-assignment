@@ -1,6 +1,6 @@
 """Workflow execution endpoints."""
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Path
 
 from backend.dependencies import get_workflow_service
 from backend.schemas.workflow import (
@@ -33,7 +33,12 @@ async def get_workflow_graph(
 
 @router.get("/sessions/{session_id}", response_model=WorkflowSessionResponse)
 async def get_workflow_session(
-    session_id: str,
+    session_id: str = Path(
+        ...,
+        pattern=r"^[a-zA-Z0-9\-_]+$",
+        max_length=100,
+        description="Persisted session identifier.",
+    ),
     workflow_service: WorkflowService = Depends(get_workflow_service),
 ) -> WorkflowSessionResponse:
     """Return the current persisted state for a workflow session."""

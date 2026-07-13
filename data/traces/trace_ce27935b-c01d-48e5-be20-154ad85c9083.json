@@ -1,0 +1,80 @@
+{
+  "trace_id": "ce27935b-c01d-48e5-be20-154ad85c9083",
+  "session_id": "eval-17fa83e2-0e2e-43fe-9408-286b94f56d7b",
+  "timestamp": "2026-07-14T03:37:41.081432",
+  "user_input": "Apply sick leave for EMP-303 from 2026-09-10 to 2026-09-15",
+  "total_latency_sec": 1.3506181669654325,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2958634590031579,
+      "prompt_tokens": 117,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3549999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.0529116250108927,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-303",
+            "leave_type": "sick",
+            "start_date": "2026-09-10",
+            "end_date": "2026-09-15",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 1.0522663749288768,
+          "retries": 1,
+          "failures": [
+            "HR API write conflict."
+          ],
+          "status": "approved"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.0018430829513818026,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "5. Earned Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3549999999999994e-05,
+  "status": "completed"
+}

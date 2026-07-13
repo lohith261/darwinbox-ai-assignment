@@ -1,0 +1,50 @@
+{
+  "trace_id": "71192820-f1ae-45bd-8a0d-b104daefe84a",
+  "session_id": "eval-93b6b67f-9d2d-4c6b-a0c8-89d8d8cc51c9",
+  "timestamp": "2026-07-14T03:36:33.478233",
+  "user_input": "What is my sick leave balance? My ID is EMP-101",
+  "total_latency_sec": 2.161239124950953,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 9.916955605149269e-06,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.1612292079953477,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-101",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 2.160511374939233,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

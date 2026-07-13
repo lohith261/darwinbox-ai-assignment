@@ -8,6 +8,8 @@ from pydantic import BaseModel, Field
 
 
 class ToolCallTrace(BaseModel):
+    """Schema representing details of a single resilient HR tool execution."""
+
     tool_name: str
     arguments: dict[str, Any]
     latency_sec: float
@@ -17,6 +19,8 @@ class ToolCallTrace(BaseModel):
 
 
 class AgentTrace(BaseModel):
+    """Schema representing metrics and outputs collected from an individual agent execution."""
+
     agent_name: str
     latency_sec: float
     prompt_tokens: int = 0
@@ -28,6 +32,8 @@ class AgentTrace(BaseModel):
 
 
 class RequestTrace(BaseModel):
+    """Schema representing the root telemetry trace generated for a single user query."""
+
     trace_id: str
     session_id: str
     timestamp: str

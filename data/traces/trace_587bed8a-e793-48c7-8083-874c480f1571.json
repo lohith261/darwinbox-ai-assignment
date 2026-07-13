@@ -1,0 +1,41 @@
+{
+  "trace_id": "587bed8a-e793-48c7-8083-874c480f1571",
+  "session_id": "c59c804a-40d3-4608-8135-4e09bfee8fe9",
+  "timestamp": "2026-07-14T03:22:34.301990",
+  "user_input": "What is the notice period required for remote work?",
+  "total_latency_sec": 0.3030457500135526,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.3029050000477582,
+      "prompt_tokens": 115,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.325e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 8.779100608080626e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 5.2958959713578224e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.325e-05,
+  "status": "completed"
+}

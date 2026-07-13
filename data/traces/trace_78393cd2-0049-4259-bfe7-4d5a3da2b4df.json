@@ -1,0 +1,49 @@
+{
+  "trace_id": "78393cd2-0049-4259-bfe7-4d5a3da2b4df",
+  "session_id": "eval-470683d6-6337-43a9-a723-303b78f072a8",
+  "timestamp": "2026-07-14T03:37:33.537079",
+  "user_input": "Download my payslip for July 2026. My ID is EMP-101",
+  "total_latency_sec": 1.3618264999240637,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 1.2791948392987251e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.3618137079756707,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "fetch_payslip",
+          "arguments": {
+            "employee_id": "EMP-101",
+            "leave_type": null,
+            "start_date": null,
+            "end_date": null,
+            "month": "July",
+            "year": 2026
+          },
+          "latency_sec": 1.3611896670190617,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s"
+          ],
+          "status": "success"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

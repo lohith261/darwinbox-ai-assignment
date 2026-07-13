@@ -1,0 +1,62 @@
+{
+  "trace_id": "4947a27e-0bd3-4d33-a160-a78ac403d56d",
+  "session_id": "eval-a60fd5a8-3e3f-42ad-9848-77015114dd3f",
+  "timestamp": "2026-07-14T03:36:39.332855",
+  "user_input": "What is the policy for dog walking leave?",
+  "total_latency_sec": 0.3127112080110237,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.30827516701538116,
+      "prompt_tokens": 112,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.2799999999999996e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.0001177079975605011,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.004318332998082042,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "Document Introduction",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.2799999999999996e-05,
+  "status": "completed"
+}

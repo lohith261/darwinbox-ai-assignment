@@ -8,9 +8,15 @@ from pydantic import BaseModel, Field
 class WorkflowInvokeRequest(BaseModel):
     """Request payload for invoking the workflow."""
 
-    user_input: str = Field(min_length=1, description="User request for the workflow.")
+    user_input: str = Field(
+        min_length=1,
+        max_length=500,
+        description="User request for the workflow.",
+    )
     session_id: str | None = Field(
         default=None,
+        max_length=100,
+        pattern=r"^[a-zA-Z0-9\-_]+$",
         description="Optional session identifier used for LangGraph thread persistence.",
     )
 

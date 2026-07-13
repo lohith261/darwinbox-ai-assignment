@@ -1,0 +1,41 @@
+{
+  "trace_id": "5b3e37b3-a346-46d9-89ad-4389c077b2f4",
+  "session_id": "eval-27fc3b26-8988-4724-b656-dce609374dd3",
+  "timestamp": "2026-07-14T03:37:44.101584",
+  "user_input": "Is there a policy about remote work in Antarctica?",
+  "total_latency_sec": 0.2746585839195177,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2745546249207109,
+      "prompt_tokens": 115,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.325e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 7.687497418373823e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 2.7084024623036385e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.325e-05,
+  "status": "completed"
+}

@@ -1,0 +1,62 @@
+{
+  "trace_id": "38c55851-b18b-4732-8331-dbe7a48f3d43",
+  "session_id": "eval-c7e812bd-fc75-46f2-9cff-8869b376d373",
+  "timestamp": "2026-07-14T03:37:37.294053",
+  "user_input": "xyz123abc !!!",
+  "total_latency_sec": 0.29287520912475884,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.28815425001084805,
+      "prompt_tokens": 105,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.175e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 5.966704338788986e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.004661292070522904,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "5. Earned Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.175e-05,
+  "status": "completed"
+}

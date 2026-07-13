@@ -1,13 +1,16 @@
 """Supervisor agent implementation."""
 
-from dataclasses import dataclass
-from typing import Literal, cast
+from dataclasses import dataclass, field
+from typing import Any, Literal, cast
 
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
 from backend.config.settings import Settings
+from backend.tracing.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 class SupervisorDecision(BaseModel):
@@ -42,9 +45,20 @@ class SupervisorAgent:
 
     settings: Settings
     name: str = "supervisor_agent"
+    _router: Any = field(default=None, init=False)
+
+    def __post_init__(self) -> None:
+        """Initialize the reusable OpenAI Chat model router to avoid reconstruction overhead."""
+        if self.settings.openai_api_key:
+            self._router = ChatOpenAI(
+                model=self.settings.openai_model,
+                api_key=self.settings.openai_api_key,
+                temperature=0,
+            ).with_structured_output(SupervisorDecision)
 
     def _default_decision(self, rationale: str) -> SupervisorDecision:
         """Return a safe fallback routing decision."""
+        logger.warning("agent_routing_fallback_triggered", rationale=rationale)
         return SupervisorDecision(
             next_agents=["policy_agent", "action_agent"],
             rationale=rationale,
@@ -54,18 +68,13 @@ class SupervisorAgent:
         self, user_input: str, messages: list[BaseMessage] | None = None
     ) -> SupervisorDecision:
         """Return a structured routing decision for the workflow."""
-        if not self.settings.openai_api_key:
+        if self._router is None:
             return self._default_decision(
                 rationale=(
-                    "OpenAI API key is not configured, so the workflow defaults " "to both agents."
+                    "OpenAI API key is not configured or router failed initialization, "
+                    "so the workflow defaults to both agents."
                 ),
             )
-
-        router = ChatOpenAI(
-            model=self.settings.openai_model,
-            api_key=self.settings.openai_api_key,
-            temperature=0,
-        ).with_structured_output(SupervisorDecision)
 
         try:
             chat_messages: list[BaseMessage] = [SystemMessage(content=SUPERVISOR_SYSTEM_PROMPT)]
@@ -75,12 +84,19 @@ class SupervisorAgent:
                         chat_messages.append(msg)
             chat_messages.append(HumanMessage(content=user_input))
 
-            decision = router.invoke(chat_messages)
-            return cast(SupervisorDecision, decision)
-        except Exception:
+            decision = self._router.invoke(chat_messages)
+            resolved_decision = cast(SupervisorDecision, decision)
+            logger.info(
+                "agent_routing_completed",
+                user_input=user_input,
+                next_agents=resolved_decision.next_agents,
+                rationale=resolved_decision.rationale,
+            )
+            return resolved_decision
+        except Exception as e:
             return self._default_decision(
                 rationale=(
-                    "OpenAI was unreachable or misconfigured during routing, so the workflow "
-                    "defaults to both agents."
+                    f"OpenAI decision routing failed with exception: {e}, "
+                    "defaulting to both agents."
                 ),
             )

@@ -1,0 +1,41 @@
+{
+  "trace_id": "b17b4ac0-ce27-41d1-bbe7-459e864ebb01",
+  "session_id": "eval-08bb5528-287f-4b3b-9bef-a396b1ada5c7",
+  "timestamp": "2026-07-14T03:37:36.709059",
+  "user_input": "What is the policy for dog walking leave?",
+  "total_latency_sec": 0.2939621249679476,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.29385083401575685,
+      "prompt_tokens": 112,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.2799999999999996e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 7.25829740986228e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 3.8707978092134e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.2799999999999996e-05,
+  "status": "completed"
+}

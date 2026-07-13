@@ -1,0 +1,60 @@
+{
+  "trace_id": "58268ab7-169f-47b0-a6d6-9ef3a1709ea4",
+  "session_id": "9bae6b38-7243-4659-9664-a124b1628f24",
+  "timestamp": "2026-07-14T03:30:40.200403",
+  "user_input": "How many days of sick leave do I get?",
+  "total_latency_sec": 2.4918628750601783,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.36574583291076124,
+      "prompt_tokens": 111,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.265e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.126069250050932,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-123",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 2.1252717500319704,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 4.7792098484933376e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.265e-05,
+  "status": "completed"
+}

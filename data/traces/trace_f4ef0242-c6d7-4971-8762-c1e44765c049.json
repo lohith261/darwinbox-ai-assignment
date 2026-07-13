@@ -1,0 +1,62 @@
+{
+  "trace_id": "f4ef0242-c6d7-4971-8762-c1e44765c049",
+  "session_id": "3ae6e108-8ff5-47ef-9317-7b6ab9bde5a0",
+  "timestamp": "2026-07-14T03:07:47.599552",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.4019889999181032,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.3024403339950368,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.7665984816849232e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.09952099993824959,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "8. Payroll Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "10. Work From Home Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

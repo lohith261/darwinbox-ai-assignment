@@ -1,0 +1,50 @@
+{
+  "trace_id": "92b9d881-ce60-43e1-9fca-ff60ac890ad8",
+  "session_id": "60dfd46a-1f3d-4ecf-8cc4-d6d95dcea2f9",
+  "timestamp": "2026-07-14T03:08:32.482544",
+  "user_input": "Check my leave balance for employee EMP-123",
+  "total_latency_sec": 1.7377141250763088,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 1.7208047211170197e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.7376969170290977,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-123",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 1.7374494170071557,
+          "retries": 1,
+          "failures": [
+            "Timeout after 0.8s",
+            "Timeout after 0.8s"
+          ],
+          "status": "fallback"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

@@ -1,0 +1,62 @@
+{
+  "trace_id": "b42bf97c-91c8-47a0-951e-2cdb6cd71302",
+  "session_id": "f8312347-ac66-48d5-8e79-943a6cd6af7c",
+  "timestamp": "2026-07-14T03:09:34.577814",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.31481612485367805,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2849558329908177,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 4.8958929255604744e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.029811332933604717,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

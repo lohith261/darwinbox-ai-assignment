@@ -1,0 +1,60 @@
+{
+  "trace_id": "4088f228-2c35-4a71-bcb1-76a020ed2d55",
+  "session_id": "967af132-b4bd-41a8-9433-0ffe5397e30c",
+  "timestamp": "2026-07-14T03:11:21.129284",
+  "user_input": "Apply sick leave for EMP-888 from 2026-09-01 to 2026-09-05",
+  "total_latency_sec": 1.4593362070154399,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.27001933299470693,
+      "prompt_tokens": 117,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3549999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 1.1892600409919396,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-888",
+            "leave_type": "sick",
+            "start_date": "2026-09-01",
+            "end_date": "2026-09-05",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 1.1890990000683814,
+          "retries": 1,
+          "failures": [
+            "HR API write conflict.",
+            "HR API write conflict."
+          ],
+          "status": "fallback_queued"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 5.683302879333496e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3549999999999994e-05,
+  "status": "completed"
+}

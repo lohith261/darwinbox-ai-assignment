@@ -1,0 +1,57 @@
+{
+  "trace_id": "077f2912-3639-40e4-90b2-c3c2a6fa6d8c",
+  "session_id": "62846382-8723-4a3c-b7c8-1143192d3320",
+  "timestamp": "2026-07-14T03:10:42.044853",
+  "user_input": "Apply sick leave for EMP-888 from 2026-09-01 to 2026-09-05",
+  "total_latency_sec": 0.5677462500752881,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2760287499986589,
+      "prompt_tokens": 117,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3549999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.2916438750689849,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-888",
+            "leave_type": "sick",
+            "start_date": "2026-09-01",
+            "end_date": "2026-09-05",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.29139145894441754,
+          "retries": 0,
+          "failures": [],
+          "status": "approved"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 7.362500764429569e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3549999999999994e-05,
+  "status": "completed"
+}

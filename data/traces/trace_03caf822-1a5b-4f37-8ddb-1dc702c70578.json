@@ -1,0 +1,62 @@
+{
+  "trace_id": "03caf822-1a5b-4f37-8ddb-1dc702c70578",
+  "session_id": "0fbd8431-8eb7-4304-b399-91c80de04a03",
+  "timestamp": "2026-07-14T03:04:52.287965",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.36196354194544256,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.3041342080105096,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.000125208985991776,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.05770412494894117,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "4. Casual Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "7. Paternity Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

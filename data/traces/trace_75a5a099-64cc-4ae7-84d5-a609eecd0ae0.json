@@ -1,0 +1,57 @@
+{
+  "trace_id": "75a5a099-64cc-4ae7-84d5-a609eecd0ae0",
+  "session_id": "47eacf40-9c2f-464a-9ce1-0207f89be52d",
+  "timestamp": "2026-07-14T03:10:40.381396",
+  "user_input": "Check leave balance for employee EMP-505",
+  "total_latency_sec": 0.5654152081115171,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 6.28751004114747e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.5653245829744264,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-505",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.5651447080308571,
+          "retries": 0,
+          "failures": [],
+          "status": "success"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 2.775003667920828e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

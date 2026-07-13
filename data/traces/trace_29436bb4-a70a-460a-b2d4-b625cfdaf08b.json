@@ -1,0 +1,60 @@
+{
+  "trace_id": "29436bb4-a70a-460a-b2d4-b625cfdaf08b",
+  "session_id": "237a64fb-cb70-440a-9c5c-040c90bc2b93",
+  "timestamp": "2026-07-14T03:09:22.715716",
+  "user_input": "What is my sick leave balance? My ID is EMP-777",
+  "total_latency_sec": 0.7023402920458466,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 1.3959011994302273e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.7022729159798473,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "check_leave_balance",
+          "arguments": {
+            "employee_id": "EMP-777",
+            "leave_type": "sick",
+            "start_date": null,
+            "end_date": null,
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.702178334002383,
+          "retries": 1,
+          "failures": [
+            "HR API database connection timeout.",
+            "HR API database connection timeout."
+          ],
+          "status": "fallback"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 5.341705400496721e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

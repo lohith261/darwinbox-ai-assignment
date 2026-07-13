@@ -1,0 +1,62 @@
+{
+  "trace_id": "39d2a6df-a026-4462-b7ff-a2c29c38d588",
+  "session_id": "f8c11ace-479b-47bd-90cf-c6d094ecfe0e",
+  "timestamp": "2026-07-14T03:06:36.328245",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.39616466709412634,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.33995820896234363,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 5.508307367563248e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.05615137505810708,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "4. Casual Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "12. Attendance Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

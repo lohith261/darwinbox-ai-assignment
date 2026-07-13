@@ -1,0 +1,62 @@
+{
+  "trace_id": "37776397-6c56-46ba-ae22-c243a04e8768",
+  "session_id": "74c6cec7-a1f6-49d5-b067-2aa718332f76",
+  "timestamp": "2026-07-14T02:59:16.658799",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.3137951649259776,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.27133866597432643,
+      "prompt_tokens": 119,
+      "completion_tokens": 32,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 3.705e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 2.666597720235586e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.0424298329744488,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "4. Casual Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "10. Work From Home Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "11. Remote Work Policy",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "13. Policy Interpretation and Escalation",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 3.705e-05,
+  "status": "completed"
+}

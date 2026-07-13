@@ -1,0 +1,62 @@
+{
+  "trace_id": "60fd9d48-eeef-4769-9a37-f425691bdb6e",
+  "session_id": "0a3c7182-a594-43a0-98c5-4d6dc296daa4",
+  "timestamp": "2026-07-14T03:10:51.909651",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.3793341260170564,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.27584362495690584,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 8.016708306968212e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.10341033397708088,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "1. Purpose and Applicability",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "1. Purpose and Applicability",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "3. Sick Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "4. Casual Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

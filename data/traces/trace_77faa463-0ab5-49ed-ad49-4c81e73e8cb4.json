@@ -1,0 +1,62 @@
+{
+  "trace_id": "77faa463-0ab5-49ed-ad49-4c81e73e8cb4",
+  "session_id": "1516b9fe-0484-4871-8a87-8dc042f93859",
+  "timestamp": "2026-07-14T03:03:15.941124",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.29095779196359217,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.2631795830093324,
+      "prompt_tokens": 119,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 5.3849999999999994e-05
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 8.891697507351637e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.027689291979186237,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [
+        {
+          "title": "1. Purpose and Applicability",
+          "source": "docs/hr_policy.md",
+          "rank": 1
+        },
+        {
+          "title": "2. Leave Policy Overview",
+          "source": "docs/hr_policy.md",
+          "rank": 2
+        },
+        {
+          "title": "6. Maternity Leave",
+          "source": "docs/hr_policy.md",
+          "rank": 3
+        },
+        {
+          "title": "9. Notice Period",
+          "source": "docs/hr_policy.md",
+          "rank": 4
+        }
+      ],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 5.3849999999999994e-05,
+  "status": "completed"
+}

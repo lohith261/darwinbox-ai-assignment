@@ -101,23 +101,114 @@ class WorkflowGraph:
 
         return workflow.compile(checkpointer=self._checkpointer)
 
+    @staticmethod
+    def _has_action_word_pair(q_words: set[str], verbs: set[str], noun: str) -> bool:
+        """Check whether any *verb* from *verbs* and *noun* both appear in *q_words*.
+        This catches non-contiguous patterns like "apply for 2 days casual leave".
+        """
+        return noun in q_words and bool(q_words & verbs)
+
     def _is_deterministic(self, query: str) -> tuple[bool, list[str], str]:
-        """Check if request matches a simple pattern to bypass LLM routing."""
+        """
+        Classify a query deterministically by pattern matching.
+
+        Returns:
+            (True, ["action_agent"], rationale) for action-only queries
+            (True, ["policy_agent"], rationale) for policy-only queries
+            (False, [], "") when the query is ambiguous or mixed — falls through to LLM
+
+        Strict ordering:
+          1. Check action patterns first (they are more transactional and urgent).
+             BEFORE returning action, verify the query does NOT contain strong policy
+             signals — if it does, defer to the LLM for disambiguation.
+          2. Check policy patterns *only if* the query is unambiguously policy-focused
+             and contains NO action keywords.
+          3. Mixed queries (action + policy keywords together) are routed to the LLM.
+        """
         q = query.lower()
-        if any(
-            k in q
-            for k in [
-                "leave balance",
-                "remaining leave",
-                "check balance",
-                "how many days of leave",
-            ]
-        ):
-            return True, ["action_agent"], "Bypassed LLM: Query matched leave balance pattern."
-        if any(k in q for k in ["payslip", "salary", "download payslip", "pay slip"]):
-            return True, ["action_agent"], "Bypassed LLM: Query matched payslip pattern."
-        if any(k in q for k in ["apply leave", "request leave", "take leave"]):
-            return True, ["action_agent"], "Bypassed LLM: Query matched leave application pattern."
+        q_words = set(q.split())
+
+        # ---- Strong policy signals that override action matching ----
+        # When the query matches an action pattern BUT also contains any of these
+        # policy phrases, the query is ambiguous — defer to the LLM.
+        _STRONG_POLICY = [
+            "policy",
+            "what is the policy",
+            "what does the policy say",
+            "notice period",
+            "work from home",
+            "remote work",
+        ]
+
+        # ---- 1. Action-only patterns (transactional / data operations) ----
+        # Each entry: (list_of_substring_keys, list_of_word_set_checks, rationale)
+        # The pattern matches if ANY substring key is found, OR if the word-check
+        # function returns True.
+        _ACTION_PATTERNS: list[tuple[list[str], str]] = [
+            (["leave balance", "remaining leave", "check balance", "how many days of leave"],
+             "Bypassed LLM: Query matched leave balance pattern."),
+            (["payslip", "salary", "download payslip", "pay slip"],
+             "Bypassed LLM: Query matched payslip pattern."),
+            (["apply leave", "request leave", "take leave", "apply for leave",
+              "applying for leave", "requesting leave", "taking leave"],
+             "Bypassed LLM: Query matched leave application pattern."),
+        ]
+
+        # Word-set based matching for patterns that users naturally type with
+        # modifiers between the verb and noun (e.g. "apply for 2 days casual leave").
+        _ACTION_WORD_PAIRS: list[tuple[set[str], str, str]] = [
+            ({"apply", "applying", "applies", "request", "requesting", "requests",
+              "take", "taking", "takes"},
+             "leave",
+             "Bypassed LLM: Query matched leave application pattern."),
+        ]
+
+        def _matches_action() -> bool:
+            for keywords, _ in _ACTION_PATTERNS:
+                if any(k in q for k in keywords):
+                    return True
+            for verbs, noun, _ in _ACTION_WORD_PAIRS:
+                if self._has_action_word_pair(q_words, verbs, noun):
+                    return True
+            return False
+
+        if _matches_action():
+            # If the query also has strong policy signals, it's ambiguous
+            # (e.g. "What is the leave balance policy?") → defer to LLM
+            if any(k in q for k in _STRONG_POLICY):
+                return False, [], ""
+            return True, ["action_agent"], "Bypassed LLM: Query matched action pattern."
+
+        # ---- 2. Policy-only patterns (knowledge / rule lookups) ----
+        _POLICY_KEYWORDS = [
+            "policy",
+            "notice period",
+            "work from home",
+            "remote work",
+            "attendance policy",
+            "leave policy",
+            "payroll policy",
+            "maternity leave policy",
+            "paternity leave policy",
+            "what is the policy on",
+            "what does the policy say",
+            "sick leave policy",
+            "casual leave policy",
+            "earned leave policy",
+        ]
+        _ACTION_TRIGGERS = {
+            "balance", "apply", "applying", "applies",
+            "payslip", "salary",
+            "remaining",
+        }
+
+        is_policy_candidate = any(k in q for k in _POLICY_KEYWORDS)
+        has_action_overlap = bool(q_words & _ACTION_TRIGGERS)
+
+        if is_policy_candidate and not has_action_overlap:
+            return True, ["policy_agent"], "Bypassed LLM: Query matched policy pattern."
+
+        # ---- 3. Ambiguous / mixed — defer to LLM supervisor ----
         return False, [], ""
 
     def _run_supervisor(self, state: WorkflowState, config: RunnableConfig) -> dict[str, object]:

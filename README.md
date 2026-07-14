@@ -1,122 +1,120 @@
-# 🧬 Darwin: Agentic HR Workflow Orchestrator
+# Darwin: Agentic HR Workflow Orchestrator
 
-[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green.svg)](https://fastapi.tiangolo.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.31-red.svg)](https://streamlit.io/)
-[![LangGraph](https://img.shields.io/badge/LangGraph-0.0.25-orange.svg)](https://github.com/langchain-ai/langgraph)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.116+-green.svg)](https://fastapi.tiangolo.com/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-0.6+-orange.svg)](https://github.com/langchain-ai/langgraph)
+[![React 19](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](https://vite.dev/)
 
-Darwin is a production-grade, state-managed AI orchestration platform designed to automate HR administrative operations, policy retrieval, and database transactional updates. Powered by LangGraph, FastAPI, and ChromaDB, it bridges the gap between unstructured policy documentation and structured core HR systems.
-
----
-
-## 📸 Interface Preview
-
-### Core Web Dashboard
-![Darwin Interface Preview](docs/assets/dashboard_preview.png)
-*Figure 1: Fully interactive Streamlit interface featuring dual-panel conversation threads, live execution tracing, and token savings metrics.*
-
-### Orchestration Graph Architecture
-![LangGraph Visualizer](docs/assets/graph_preview.png)
-*Figure 2: Real-time agent routing and state visualization.*
+Darwin is a production-grade, state-managed AI orchestration platform for automating HR administrative operations, policy retrieval, and database transactional updates. Powered by LangGraph, FastAPI, and ChromaDB, it bridges the gap between unstructured policy documentation and structured core HR systems.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-*   **Autonomous Multi-Agent Supervisor:** High-fidelity routing that dynamically coordinates queries between policy-retrieval agents and tool-execution agents based on semantic intent.
-*   **LLM Bypass Routing (Cost Optimization):** Matches simple requests (e.g., leave balances, payslip downloads) deterministically, bypassing the LLM completely to guarantee **20%+ token cost savings** at scale.
-*   **Resilient HR Integration Engine:** Wraps backend operations with auto-retry, strict `0.8s` timeouts, and fallback cached values to remain stable during downstream network spikes.
-*   **Contextual Session Memory:** Maintains conversational state, employee identities, and parameters (dates, amounts) across multi-turn sessions using persistent checkpoint savers.
-*   **Grounded Policy Search (RAG):** Policy checks are executed against ChromaDB vector indexes using semantic embedding lookups. Includes strict constraint rules that return "Policy unavailable" instead of hallucinating when information is missing.
-*   **Telemetric Request Tracing:** Generates detailed, JSON-formatted request traces tracking agents, latency, tool metadata, API errors, and token costs for audit logs.
+- **Autonomous Multi-Agent Supervisor** -- Dynamic routing between policy-retrieval and tool-execution agents based on semantic intent classification.
+- **LLM Bypass Routing (Cost Optimization)** -- Deterministic pattern matching for high-frequency requests (leave balances, payslips) that bypasses the LLM entirely, achieving 20%+ token cost savings.
+- **Resilient HR Integration Engine** -- Auto-retry with strict 0.8s timeouts and fallback cached values for stability during downstream API failures.
+- **Contextual Session Memory** -- Maintains conversational state, employee identities, and date parameters across multi-turn sessions via persistent checkpoint savers.
+- **Grounded Policy Search (RAG)** -- Semantic embedding lookups against ChromaDB vector indexes with strict grounding constraints that return "Policy unavailable" rather than hallucinating.
+- **Telemetric Request Tracing** -- JSON-formatted traces capturing agents, latency, tool metadata, API errors, retries, and token costs for audit and observability.
+- **Modern React Dashboard** -- Real-time chat workspace with telemetry panel, cost analytics, agent status visualization, and responsive design.
 
 ---
 
-## 🏛️ System Architecture
-
-The following diagram illustrates how requests flow through the API gateway, supervisor routing logic, agent workflows, data stores, and tracing systems:
+## System Architecture
 
 ```mermaid
 graph TD
-    Client["Streamlit UI (Port 8501)"] -->|HTTP POST /api/v1/workflows/invoke| API["FastAPI Server (Port 8000)"]
+    Client["React Dashboard (Vite)"] -->|HTTP POST /api/v1/workflows/invoke| API["FastAPI Server (Port 8000)"]
     API -->|Invoke Graph| Service["Workflow Service"]
-    
+
     subgraph Engine ["LangGraph Agentic HR Engine"]
         Service -->|State & Config| Graph["Workflow State Graph"]
-        Graph -->|Step 1: Check Deterministic Route| Supervisor["Supervisor Agent (LLM Router/Bypass)"]
+        Graph -->|Step 1: Deterministic Route Check| Supervisor["Supervisor Agent (LLM Router / Bypass)"]
         Graph -->|Step 2a: RAG Query| Policy["Policy Agent (ChromaDB Vector Search)"]
         Graph -->|Step 2b: Execute Tasks| Action["Action Agent (Mock HR APIs)"]
     end
-    
+
     subgraph Data ["Persistence & Mock APIs"]
         Policy -->|Retrieve Docs| Chroma["ChromaDB Vector Store"]
         Action -->|Resilient Invoke| Tools["Mock HR APIs (Resilience Engine)"]
-        Tools -->|Simulate Errors/Latency| MockAPIs["Core HR APIs"]
-        Graph -->|Persist Checkpoints| SQLite["LangGraph InMemory/SQLite Checkpointer"]
+        Graph -->|Persist Checkpoints| Memory["LangGraph MemorySaver"]
     end
-    
-    subgraph Observability ["Telemetry & Observability"]
+
+    subgraph Observability ["Telemetry"]
         Service -->|JSON Trace Export| TraceManager["TraceManager (data/traces/)"]
     end
 ```
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 .
 ├── backend/
-│   ├── agents/            # Orchestration graphs and agent state definitions
-│   │   ├── action.py      # Resilient HR transaction tool execution agent
-│   │   ├── policy.py      # RAG-grounded policy QA agent
-│   │   ├── supervisor.py  # Router supervisor agent
-│   │   └── workflow.py    # LangGraph pipeline definition
-│   ├── api/               # FastAPI route and controller definitions
-│   ├── config/            # Pydantic environment configurations
-│   ├── core/              # Global exception handlers and HTTP middlewares
-│   ├── schemas/           # Pydantic request/response validations
-│   ├── services/          # Workflow orchestration and telemetry service
-│   ├── tools/             # Mock resilient HR integration APIs
-│   ├── tracing/           # Request trace manager and logging config
-│   └── app.py             # App initialization factory
-├── data/                  # Local storage directories (SQLite database, traces, vectors)
-├── docs/                  # Technical design notes and source HR policy documentation
-├── frontend/              # Streamlit dashboard interface
-└── tests/                 # Unit and comprehensive test suites
+│   ├── agents/             # Orchestration graphs and agent state definitions
+│   │   ├── action.py       # Resilient HR transaction tool execution agent
+│   │   ├── policy.py       # RAG-grounded policy QA agent
+│   │   ├── supervisor.py   # Router supervisor agent (LLM + bypass)
+│   │   └── workflow.py     # LangGraph pipeline definition
+│   ├── api/                # FastAPI route and controller definitions
+│   ├── config/             # Pydantic environment configurations
+│   ├── core/               # Exception handlers, middleware, state container
+│   ├── memory/             # Session memory management
+│   ├── rag/                # Document loading, chunking, embeddings, vector store
+│   ├── schemas/            # Pydantic request/response models
+│   ├── services/           # Workflow orchestration and application services
+│   ├── tools/              # Mock resilient HR integration APIs
+│   ├── tracing/            # Request trace manager and structured logging
+│   └── main.py             # FastAPI entrypoint
+├── frontend-web/           # React + TypeScript + Vite dashboard
+│   └── src/
+│       ├── components/     # Sidebar, ChatWorkspace, TelemetryPanel
+│       ├── api.ts          # Backend API client
+│       ├── types.ts        # TypeScript interfaces
+│       └── App.tsx         # Root application component
+├── data/                   # Trace exports and local storage
+├── docs/                   # Technical design docs and HR policy source
+├── tests/                  # Unit and integration test suites (79 tests)
+└── supabase/functions/     # Edge functions (hr-workflow)
 ```
 
 ---
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 ### Prerequisites
 
-*   Python 3.12+
-*   [uv](https://docs.astral.sh/uv/) (Fast Python package manager)
+- Python 3.12+
+- Node.js 18+
+- [uv](https://docs.astral.sh/uv/) (Python package manager, optional -- pip works too)
 
-### 1. Clone & Configure Environments
-
-Initialize your environment variables from the template:
+### 1. Configure Environment
 
 ```bash
 cp .env.example .env
 ```
 
-Review and adjust variables in the created `.env` file.
+Set `OPENAI_API_KEY` in `.env` for full LLM routing. Without it, Darwin still works in bypass mode for deterministic queries.
 
-### 2. Install Project Dependencies
+### 2. Install Dependencies
 
-Install project dependencies and setup the virtual environment in one command:
-
+**Backend:**
 ```bash
 uv sync
+# or: pip install -e ".[dev]"
+```
+
+**Frontend:**
+```bash
+cd frontend-web && npm install
 ```
 
 ### 3. Ingest Policy Documents
 
-Build the vector index in ChromaDB from the HR policy markdown document:
+Build the vector index from the HR policy markdown:
 
 ```bash
 uv run python -m backend.rag.ingest
@@ -124,88 +122,94 @@ uv run python -m backend.rag.ingest
 
 ### 4. Run the Application
 
-Start the backend API server:
-
+Start the backend:
 ```bash
 uv run uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Start the Streamlit frontend in a separate shell:
-
+Start the frontend dev server:
 ```bash
-uv run streamlit run frontend/app.py
+cd frontend-web && npm run dev
 ```
 
-Open `http://localhost:8501` to access the chat dashboard.
+The dashboard is accessible at the Vite dev server URL (typically `http://localhost:5173`).
 
 ---
 
-## 🔑 Environment Variables
+## API Endpoints
 
-Adjust configuration parameters inside `.env`:
+| Method | Path | Description |
+| :--- | :--- | :--- |
+| `GET` | `/health` | Service health check |
+| `POST` | `/api/v1/workflows/invoke` | Execute a workflow query |
+| `GET` | `/api/v1/workflows/graph` | Workflow graph visualization (Mermaid) |
+| `GET` | `/api/v1/workflows/sessions/{id}` | Retrieve persisted session state |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/api/v1/workflows/invoke \
+  -H "Content-Type: application/json" \
+  -d '{"user_input": "What is my sick leave balance? ID is EMP-999", "session_id": "demo-001"}'
+```
+
+---
+
+## Environment Variables
 
 | Variable | Description | Default |
 | :--- | :--- | :--- |
-| `OPENAI_API_KEY` | OpenAI API access token | *(Required)* |
-| `OPENAI_MODEL` | LLM model for supervisor routing decisions | `gpt-4o-mini` |
-| `OPENAI_EMBEDDING_MODEL` | Vector embedding generation model | `text-embedding-3-small` |
-| `APP_ENV` | Application environment configuration | `local` |
-| `LOG_LEVEL` | Logging levels (`DEBUG`, `INFO`, `WARNING`, `ERROR`) | `INFO` |
-| `CHROMA_PERSIST_DIRECTORY`| Path where vector database persists indexes | `data/chroma` |
-| `SQLITE_PATH` | Path where LangGraph sessions persist checkpointers | `data/sqlite/app.db` |
+| `OPENAI_API_KEY` | OpenAI API access token | *(Required for LLM routing)* |
+| `OPENAI_MODEL` | LLM model for supervisor decisions | `gpt-4o-mini` |
+| `OPENAI_EMBEDDING_MODEL` | Embedding model for RAG | `text-embedding-3-small` |
+| `APP_ENV` | Application environment | `local` |
+| `LOG_LEVEL` | Logging level | `INFO` |
+| `CHROMA_PERSIST_DIRECTORY` | ChromaDB storage path | `data/chroma` |
 
 ---
 
-## 💬 Example Conversations
+## Example Conversations
 
-### Turn 1 (Action & Memory Check)
+**Turn 1 -- Action with Memory Extraction:**
 > **User:** What is my sick leave balance? My ID is EMP-999.
 >
-> **Darwin:** Checked leave balance for EMP-999. Leave Type: Sick, Balance: 10 days (Source: api, Status: success).
+> **Darwin:** Checked leave balance for EMP-999. Leave Type: Sick, Balance: 10 days. Status: success.
 
-### Turn 2 (Context Modification Follow-Up)
+**Turn 2 -- Context Persistence:**
 > **User:** What about casual leave?
 >
-> **Darwin:** Checked leave balance for EMP-999. Leave Type: Casual, Balance: 8 days (Source: cache, Status: fallback). *(Note: Persisted ID "EMP-999" automatically from session memory).*
+> **Darwin:** Checked leave balance for EMP-999. Leave Type: Casual, Balance: 8 days. *(Employee ID persisted from session memory.)*
 
-### Turn 3 (Policy Grounded Search)
+**Turn 3 -- Grounded Policy Search:**
 > **User:** What is the notice period policy?
 >
-> **Darwin:** Based on the retrieved HR policy context:
-> - Notice Period: Employees are required to serve a standard 30-day notice period upon resignation.
+> **Darwin:** Based on retrieved HR policy: Employees must serve a 30-day notice period upon resignation.
 
 ---
 
-## 🏗️ Design Decisions
+## Cost Optimization
 
-*   **Structured Output Routing:** Rather than relying on simple chat strings, the supervisor uses OpenAI's structured output tool contracts (`SupervisorDecision`) to output strict lists of downstream targets.
-*   **State Telemetry Reduction:** Parallel workflow branches (e.g. policy searches running in parallel with tool executions) can trigger write collisions on state logs. We resolved concurrent collisions using a custom LangGraph reducer (`merge_trace_data`) that merges list elements and recalculates metrics.
-*   **Thread Isolation timeouts:** Downstream API calls are wrapped in thread pool executors, enforcing a hard timeout boundary (`0.8s`) without locking main event loops.
+Darwin implements deterministic routing that intercepts high-frequency transactional patterns before they reach the supervisor LLM:
 
----
-
-## 📈 Cost Optimization
-
-To minimize LLM costs, we implement a **Deterministic Routing Strategy** that intercepts high-frequency transactional patterns before they hit the supervisor LLM:
-
-```text
-User Input: "What's my sick leave balance?"
-  ==> Pre-Parser: Matches "balance" 
-  ==> LLM Bypass: Bypasses GPT routing completely (Router Cost: $0.00)
+```
+Input: "What's my sick leave balance?"
+  => Pattern Match: "balance" keyword detected
+  => LLM Bypass: Router cost $0.00
+  => Direct dispatch to action_agent
 ```
 
-The Streamlit UI displays running totals of the **Naive cost** (if LLMs routed every step) vs. **Optimized cost**, allowing teams to monitor token savings in real time.
+The dashboard displays running totals of **Naive cost** (every step routed via LLM) vs. **Optimized cost**, with real-time savings percentage.
 
 ---
 
-## 🔬 Observability & Tracing
+## Observability & Tracing
 
-Each execution logs a telemetry trace model exported to `data/traces/trace_<uuid>.json`:
+Each execution exports a telemetry trace to `data/traces/trace_<uuid>.json`:
 
 ```json
 {
-  "trace_id": "422e1189-9407-4dbe-a1c6-cf0b9ee27b0b",
-  "session_id": "9814421b-419b-4395-88ff-1b0580a969ea",
+  "trace_id": "422e1189-...",
+  "session_id": "9814421b-...",
   "timestamp": "2026-07-14T03:22:51.102Z",
   "user_input": "What is my sick leave balance?",
   "total_latency_sec": 0.052,
@@ -232,30 +236,55 @@ Each execution logs a telemetry trace model exported to `data/traces/trace_<uuid
 
 ---
 
-## 🔧 Troubleshooting
+## Testing
 
-### 1. OpenAI Connection Timeout
-If you encounter OpenAI connection failures, verify your API key configuration inside `.env`. If you are testing offline, Darwin automatically falls back to zero-vector `DummyEmbeddings` to allow system startup.
+The project includes 79 automated tests covering routing, agents, memory, observability, and API integration.
 
-### 2. SQLite / ChromaDB File Locks
-Ensure the directories `data/sqlite/` and `data/chroma/` have appropriate write permissions. If data gets corrupted during a crash, you can safely wipe the directories and run ingestion again.
+```bash
+# Run full test suite
+uv run pytest
+
+# Run with verbose output
+uv run pytest -v
+
+# Run specific test module
+uv run pytest tests/test_routing.py
+```
+
+### Test Results (Latest)
+
+```
+tests/test_action_agent.py     7 passed
+tests/test_comprehensive.py   16 passed
+tests/test_health.py           1 passed
+tests/test_memory.py           2 passed
+tests/test_observability.py    1 passed
+tests/test_policy_agent.py     2 passed
+tests/test_routing.py         48 passed
+tests/test_workflow.py         2 passed
+──────────────────────────────────────
+Total:                        79 passed
+```
 
 ---
 
-## 🛠️ Quality Suite & Testing
+## Design Decisions
 
-We enforce strict linting, formatting, type check, and unit test suites:
+- **Structured Output Routing** -- The supervisor uses OpenAI's structured output contracts (`SupervisorDecision`) to produce strict routing targets rather than parsing free-form text.
+- **State Telemetry Merging** -- Custom LangGraph reducers (`merge_trace_data`) resolve concurrent state write collisions from parallel workflow branches.
+- **Thread-Isolated Timeouts** -- Downstream API calls execute in thread pool executors with hard 0.8s timeout boundaries to avoid blocking the event loop.
+- **Deterministic Bypass** -- A regex-based pre-classifier intercepts known query patterns (balance checks, leave applications, payslip fetches) to skip the LLM entirely.
+- **Graceful Degradation** -- Without an OpenAI key, the system still functions for deterministic routes using dummy embeddings and bypass logic.
 
-```bash
-# Run black code formatting
-uv run black .
+---
 
-# Run ruff static analysis checks
-uv run ruff check . --fix
+## Troubleshooting
 
-# Run mypy static type checking
-uv run mypy backend frontend tests
+**OpenAI Connection Issues:**
+Verify `OPENAI_API_KEY` in `.env`. Without it, Darwin works in bypass-only mode -- deterministic routes function normally, but LLM-routed queries will be marked as unavailable.
 
-# Run unit and integration tests
-uv run pytest
-```
+**ChromaDB Locks:**
+Ensure `data/chroma/` has write permissions. If corrupted, delete the directory and re-run `python -m backend.rag.ingest`.
+
+**Frontend Build Errors:**
+Run `cd frontend-web && npm install` to ensure dependencies are current, then `npm run build` to verify TypeScript compilation.

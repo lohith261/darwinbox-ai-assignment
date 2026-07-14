@@ -1,0 +1,41 @@
+{
+  "trace_id": "a9822d43-ad36-491a-b887-31f83dff6aeb",
+  "session_id": "eb1b2913-f505-4e17-9525-962162e6eea6",
+  "timestamp": "2026-07-14T22:46:57.220893",
+  "user_input": "Please review leave eligibility and trigger the next workflow step.",
+  "total_latency_sec": 0.0194996169998376,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 0.00020081000002392102,
+      "prompt_tokens": 490,
+      "completion_tokens": 60,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0001095
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 3.0359999982465524e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.019268446999831212,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0001095,
+  "status": "completed"
+}

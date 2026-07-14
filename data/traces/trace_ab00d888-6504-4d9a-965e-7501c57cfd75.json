@@ -1,0 +1,31 @@
+{
+  "trace_id": "ab00d888-6504-4d9a-965e-7501c57cfd75",
+  "session_id": "test-e2e-001",
+  "timestamp": "2026-07-14T22:49:46.276584",
+  "user_input": "What is the notice period policy?",
+  "total_latency_sec": 0.00021755000011580705,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 3.85000000733271e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "policy_agent",
+      "latency_sec": 0.00017905000004247995,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

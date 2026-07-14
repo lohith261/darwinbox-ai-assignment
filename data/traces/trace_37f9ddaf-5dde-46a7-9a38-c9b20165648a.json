@@ -1,0 +1,47 @@
+{
+  "trace_id": "37f9ddaf-5dde-46a7-9a38-c9b20165648a",
+  "session_id": "test-e2e-002",
+  "timestamp": "2026-07-14T22:50:00.584483",
+  "user_input": "Apply sick leave for EMP-123 from 2026-08-01 to 2026-08-05",
+  "total_latency_sec": 0.7807410039999922,
+  "agents": [
+    {
+      "agent_name": "supervisor_agent",
+      "latency_sec": 5.069999997431296e-05,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [],
+      "failures": [],
+      "cost": 0.0
+    },
+    {
+      "agent_name": "action_agent",
+      "latency_sec": 0.7806903040000179,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "retrieved_documents": [],
+      "tool_calls": [
+        {
+          "tool_name": "apply_leave",
+          "arguments": {
+            "employee_id": "EMP-123",
+            "leave_type": "sick",
+            "start_date": "2026-08-01",
+            "end_date": "2026-08-05",
+            "month": null,
+            "year": null
+          },
+          "latency_sec": 0.7798367330001383,
+          "retries": 0,
+          "failures": [],
+          "status": "approved"
+        }
+      ],
+      "failures": [],
+      "cost": 0.0
+    }
+  ],
+  "total_cost": 0.0,
+  "status": "completed"
+}

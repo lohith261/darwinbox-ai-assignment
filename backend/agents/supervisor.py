@@ -50,11 +50,14 @@ class SupervisorAgent:
     def __post_init__(self) -> None:
         """Initialize the reusable OpenAI Chat model router to avoid reconstruction overhead."""
         if self.settings.openai_api_key:
-            self._router = ChatOpenAI(
-                model=self.settings.openai_model,
-                api_key=self.settings.openai_api_key,
-                temperature=0,
-            ).with_structured_output(SupervisorDecision)
+            kwargs: dict[str, object] = {
+                "model": self.settings.openai_model,
+                "api_key": self.settings.openai_api_key,
+                "temperature": 0,
+            }
+            if self.settings.openai_base_url:
+                kwargs["base_url"] = self.settings.openai_base_url
+            self._router = ChatOpenAI(**kwargs).with_structured_output(SupervisorDecision)
 
     def _default_decision(self, rationale: str) -> SupervisorDecision:
         """Return a safe fallback routing decision."""

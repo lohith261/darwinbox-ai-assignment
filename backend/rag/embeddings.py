@@ -35,8 +35,10 @@ def build_embeddings(settings: Settings) -> Embeddings:
     if _is_dummy_key(settings.openai_api_key):
         return DummyEmbeddings()
 
-    kwargs = {
+    kwargs: dict[str, object] = {
         "model": settings.openai_embedding_model,
         "api_key": SecretStr(settings.openai_api_key),
     }
+    if settings.openai_base_url:
+        kwargs["openai_api_base"] = settings.openai_base_url
     return cast(Embeddings, OpenAIEmbeddings(**kwargs))

@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     api_v1_prefix: str = Field(default="/api/v1")
 
     openai_api_key: str = Field(default="")
+    openai_base_url: str | None = Field(default=None)
     openai_model: str = Field(default="gpt-4.1-mini")
     openai_embedding_model: str = Field(default="text-embedding-3-small")
 
@@ -31,6 +32,7 @@ class Settings(BaseSettings):
     chroma_persist_directory: Path = Field(default=Path("data/chroma"))
     chroma_collection_name: str = Field(default="hr_policy_documents")
     backend_base_url: str = Field(default="http://localhost:8000")
+    streamlit_server_port: int = Field(default=8501)
     policy_document_path: Path = Field(default=Path("docs/hr_policy.md"))
     policy_chunk_size: int = Field(default=900)
     policy_chunk_overlap: int = Field(default=150)

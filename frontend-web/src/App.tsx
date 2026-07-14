@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import type { ChatTurn, WorkflowInvokeResponse } from "./types";
-import { invokeWorkflow } from "./api";
+import { invokeWorkflow, checkHealth } from "./api";
 import Sidebar from "./components/Sidebar";
 import ChatWorkspace from "./components/ChatWorkspace";
 import TelemetryPanel from "./components/TelemetryPanel";
@@ -55,8 +55,7 @@ export default function App() {
     totalNaive > 0 ? ((totalNaive - totalOptimized) / totalNaive) * 100 : 0;
 
   useEffect(() => {
-    fetch("/health")
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+    checkHealth()
       .then(() => setBackendStatus("online"))
       .catch(() => setBackendStatus("offline"));
   }, []);

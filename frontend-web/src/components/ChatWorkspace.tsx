@@ -29,30 +29,37 @@ export default function ChatWorkspace({
   return (
     <section className="chat-workspace">
       <div className="panel-header">
-        <h2>Conversational Workspace</h2>
+        <h2>Workspace</h2>
       </div>
 
       <div className="chat-messages" ref={scrollRef}>
         {chatHistory.length === 0 && !loading && (
           <div className="chat-empty">
-            <div className="chat-empty-icon">💬</div>
-            <p>Ask about employee leave, balances, payslips, or HR policies.</p>
+            <p className="chat-empty-title">What can I help with?</p>
+            <p>
+              Query employee leave balances, apply for time off, fetch payslips,
+              or ask about HR policies.
+            </p>
             <div className="suggestion-chips">
               <button
                 className="chip"
-                onClick={() => onSend("What is my sick leave balance? My ID is EMP-999")}
+                onClick={() =>
+                  onSend("What is my sick leave balance? My ID is EMP-999")
+                }
               >
-                Check sick leave balance
+                Check leave balance
               </button>
               <button
                 className="chip"
                 onClick={() => onSend("What is the notice period policy?")}
               >
-                Ask about notice period
+                Notice period policy
               </button>
               <button
                 className="chip"
-                onClick={() => onSend("Fetch my July payslip, employee ID EMP-999")}
+                onClick={() =>
+                  onSend("Fetch my July payslip, employee ID EMP-999")
+                }
               >
                 Fetch payslip
               </button>
@@ -62,15 +69,15 @@ export default function ChatWorkspace({
 
         {chatHistory.map((turn, i) => (
           <div key={i} className="turn-group">
-            <div className="message message-user">
-              <div className="message-avatar">👤</div>
+            <div className="message">
+              <div className="message-avatar message-avatar--user">Y</div>
               <div className="message-bubble message-bubble--user">
                 <p>{turn.user_input}</p>
               </div>
             </div>
 
-            <div className="message message-assistant">
-              <div className="message-avatar">🧬</div>
+            <div className="message">
+              <div className="message-avatar">D</div>
               <div className="message-bubble message-bubble--assistant">
                 <p>{turn.summary}</p>
 
@@ -84,24 +91,28 @@ export default function ChatWorkspace({
                   </div>
                 )}
 
-                <div className="memory-context">
-                  {turn.employee_id && (
-                    <span className="memory-badge">🧠 Employee: {turn.employee_id}</span>
-                  )}
-                  {turn.start_date && turn.end_date && (
-                    <span className="memory-badge">
-                      🧠 Dates: {turn.start_date} → {turn.end_date}
-                    </span>
-                  )}
-                </div>
+                {(turn.employee_id || (turn.start_date && turn.end_date)) && (
+                  <div className="memory-context">
+                    {turn.employee_id && (
+                      <span className="memory-badge">
+                        {turn.employee_id}
+                      </span>
+                    )}
+                    {turn.start_date && turn.end_date && (
+                      <span className="memory-badge">
+                        {turn.start_date} to {turn.end_date}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         ))}
 
         {loading && (
-          <div className="message message-assistant">
-            <div className="message-avatar">🧬</div>
+          <div className="message">
+            <div className="message-avatar">D</div>
             <div className="message-bubble message-bubble--assistant">
               <div className="typing-indicator">
                 <span />
@@ -114,7 +125,7 @@ export default function ChatWorkspace({
 
         {error && (
           <div className="error-banner">
-            <strong>Connection error:</strong> {error}
+            <strong>Error:</strong> {error}
           </div>
         )}
       </div>
@@ -124,12 +135,12 @@ export default function ChatWorkspace({
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Query employee leave, balances, or payslips…"
+          placeholder="Ask a question..."
           disabled={loading}
           autoFocus
         />
         <button type="submit" disabled={loading || !input.trim()}>
-          {loading ? "Sending…" : "Send"}
+          Send
         </button>
       </form>
     </section>

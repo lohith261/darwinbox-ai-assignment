@@ -4,10 +4,30 @@ import type {
   WorkflowInvokeResponse,
 } from "./types";
 
-const BASE_URL = "/api/v1";
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+function getBaseUrl(): string {
+  if (SUPABASE_URL) {
+    return `${SUPABASE_URL}/functions/v1/hr-workflow`;
+  }
+  return "/api/v1";
+}
+
+const BASE_URL = getBaseUrl();
+
+const headers: Record<string, string> = {
+  "Content-Type": "application/json",
+  ...(SUPABASE_ANON_KEY
+    ? { Authorization: `Bearer ${SUPABASE_ANON_KEY}`, Apikey: SUPABASE_ANON_KEY }
+    : {}),
+};
 
 export async function checkHealth(): Promise<HealthResponse> {
-  const res = await fetch(`${BASE_URL}/../health`);
+  const url = SUPABASE_URL
+    ? `${BASE_URL}/health`
+    : `${BASE_URL}/../health`;
+  const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`Health check failed: ${res.status}`);
   return res.json();
 }
@@ -15,9 +35,12 @@ export async function checkHealth(): Promise<HealthResponse> {
 export async function invokeWorkflow(
   payload: WorkflowInvokeRequest,
 ): Promise<WorkflowInvokeResponse> {
-  const res = await fetch(`${BASE_URL}/workflows/invoke`, {
+  const url = SUPABASE_URL
+    ? `${BASE_URL}/invoke`
+    : `${BASE_URL}/workflows/invoke`;
+  const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(payload),
   });
   if (!res.ok) {

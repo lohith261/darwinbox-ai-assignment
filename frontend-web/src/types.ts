@@ -55,9 +55,10 @@ export interface WorkflowInvokeResponse {
 
 export interface HealthResponse {
   status: string;
-  app_name: string;
-  version: string;
-  environment: string;
+  service?: string;
+  app_name?: string;
+  version?: string;
+  environment?: string;
 }
 
 export interface ChatTurn {

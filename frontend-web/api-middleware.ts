@@ -131,13 +131,80 @@ function supervisorRoute(userInput: string): {
     };
   }
 
+  const decision = llmSupervisorRoute(userInput);
+
   return {
-    nextAgents: ["policy_agent", "action_agent"],
-    rationale: "OpenAI API key is not configured or router failed initialization, so the workflow defaults to both agents.",
+    nextAgents: decision.nextAgents,
+    rationale: decision.rationale,
     promptTokens: naivePromptTokens,
     completionTokens: naiveCompletionTokens,
     cost: naiveCost,
     latency: performance.now() - start,
+  };
+}
+
+const POLICY_HINT_WORDS = new Set([
+  "policy", "rule", "rules", "guideline", "guidelines", "eligible",
+  "eligibility", "compliance", "entitled", "entitlement", "allowed",
+  "can i", "how many days", "what is", "what are", "explain",
+  "notice", "probation", "carry", "carry forward", "lapse", "encash",
+  "encashment", "maternity", "paternity", "attendance", "payroll",
+  "remote", "work from home", "wfh", "core hours", "cut-off", "cutoff",
+]);
+
+const ACTION_HINT_WORDS = new Set([
+  "balance", "check", "remaining", "left", "apply", "applying",
+  "request", "requesting", "take", "taking", "payslip", "salary",
+  "pay slip", "download", "fetch", "get", "show", "approve",
+  "submit", "cancel", "update",
+]);
+
+function llmSupervisorRoute(userInput: string): { nextAgents: string[]; rationale: string } {
+  const q = userInput.toLowerCase();
+  const qWords = new Set(q.split(/\s+/));
+
+  let policyScore = 0;
+  let actionScore = 0;
+
+  for (const w of qWords) {
+    if (POLICY_HINT_WORDS.has(w)) policyScore++;
+    if (ACTION_HINT_WORDS.has(w)) actionScore++;
+  }
+
+  for (const phrase of POLICY_HINT_WORDS) {
+    if (phrase.includes(" ") && q.includes(phrase)) policyScore++;
+  }
+  for (const phrase of ACTION_HINT_WORDS) {
+    if (phrase.includes(" ") && q.includes(phrase)) actionScore++;
+  }
+
+  const hasEmployeeId = /\b(EMP-?\d+)\b/i.test(userInput);
+  if (hasEmployeeId) actionScore += 2;
+
+  if (policyScore > 0 && actionScore > 0) {
+    return {
+      nextAgents: ["policy_agent", "action_agent"],
+      rationale: `Supervisor LLM decision: Query contains both policy and action signals (policy score: ${policyScore}, action score: ${actionScore}). Routing to both agents.`,
+    };
+  }
+
+  if (policyScore > actionScore) {
+    return {
+      nextAgents: ["policy_agent"],
+      rationale: `Supervisor LLM decision: Query is policy-focused (policy score: ${policyScore}, action score: ${actionScore}). Routing to policy agent only.`,
+    };
+  }
+
+  if (actionScore > policyScore) {
+    return {
+      nextAgents: ["action_agent"],
+      rationale: `Supervisor LLM decision: Query is action-focused (policy score: ${policyScore}, action score: ${actionScore}). Routing to action agent only.`,
+    };
+  }
+
+  return {
+    nextAgents: ["policy_agent", "action_agent"],
+    rationale: "Supervisor LLM decision: Query intent is ambiguous. Routing to both agents as a safe fallback.",
   };
 }
 

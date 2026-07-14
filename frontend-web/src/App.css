@@ -57,7 +57,7 @@ html, body, #root {
 
 body {
   font-family: var(--font);
-  background: var(--bg-secondary);
+  background: #f0f2f5;
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -71,7 +71,7 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: var(--bg-secondary);
+  background: #f0f2f5;
 }
 
 /* ===== Sidebar ===== */
@@ -365,7 +365,7 @@ body {
 .main-content {
   flex: 1;
   overflow: hidden;
-  padding: 16px 16px 16px 0;
+  padding: 16px;
 }
 
 .content-grid {
@@ -380,10 +380,10 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg-primary);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .chat-header {
@@ -476,8 +476,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
-  padding: 14px;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -488,6 +489,7 @@ body {
   transition: all var(--transition-base);
   text-align: left;
   line-height: 1.4;
+  min-height: 80px;
 }
 
 .chip:hover {
@@ -717,12 +719,15 @@ body {
 
 .input-hint {
   position: absolute;
-  right: 12px;
-  font-size: 11px;
-  color: var(--text-faint);
+  right: 14px;
+  font-size: 10px;
+  color: var(--border-strong);
   font-family: var(--font-mono);
   pointer-events: none;
   transition: opacity var(--transition-fast);
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .input-hint--hidden {
@@ -763,12 +768,12 @@ body {
 /* ===== Telemetry Panel ===== */
 .telemetry-panel {
   background: var(--bg-primary);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .telemetry-header {
